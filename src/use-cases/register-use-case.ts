@@ -1,6 +1,7 @@
 import { hash } from 'bcryptjs'
 
 import { UsersRepository } from '@/repositories/users-repository'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 interface RegisterUseCaseRequest {
   name: string
@@ -26,7 +27,7 @@ export class RegisterUseCase {
     // }
 
     if (userWithSameEmail) {
-      throw new Error('User already exists with this email.')
+      throw new UserAlreadyExistsError()
     }
 
     // NOTE: Cannot use this anymore, because we are using dependency inversions:
